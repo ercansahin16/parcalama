@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Bonfile Hesaplamalar</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f1f4f8;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 40px 20px;
+      gap: 30px;
+      flex-wrap: wrap;
+    }
+    .card {
+      background: #fff;
+      padding: 30px;
+      border-radius: 16px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+      width: 320px;
+    }
+    .card h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #333;
+    }
+    label {
+      display: block;
+      margin-bottom: 8px;
+      color: #555;
+    }
+    input {
+      width: 100%;
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 16px;
+      appearance: none;
+      -moz-appearance: textfield;
+    }
+    input::-webkit-inner-spin-button,
+    input::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+    button {
+      width: 100%;
+      padding: 12px;
+      margin-top: 15px;
+      background-color: #007BFF;
+      color: white;
+      font-size: 16px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+    .result {
+      margin-top: 20px;
+      text-align: center;
+      font-weight: bold;
+      font-size: 18px;
+      color: #222;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Card 1: Bonfile Maliyeti -->
+  <div class="card">
+    <h2>Bonfile Maliyeti</h2>
+    <label for="fiyat">Derili Bonfile Fiyatı (TL/kg):</label>
+    <input type="text" id="fiyat" placeholder="Örn: 112" />
+    <button onclick="maliyetHesapla()">Hesapla</button>
+    <div class="result" id="sonuc1"></div>
+  </div>
+
+  <!-- Card 2: Miktar Dağılımı -->
+  <div class="card">
+    <h2>Bonfile & Deri Miktarı</h2>
+    <label for="miktar">Derili Bonfile Miktarı (kg):</label>
+    <input type="text" id="miktar" placeholder="Örn: 520" />
+    <button onclick="miktarHesapla()">Hesapla</button>
+    <div class="result" id="sonuc2"></div>
+  </div>
+
+  <script>
+    function maliyetHesapla() {
+      const fiyat = parseFloat(document.getElementById('fiyat').value.replace(",", "."));
+
+      if (isNaN(fiyat)) {
+        document.getElementById('sonuc1').innerText = "Lütfen geçerli bir fiyat girin.";
+        return;
+      }
+
+      const maliyet = (fiyat / 0.9).toFixed(2);
+      document.getElementById('sonuc1').innerText =
+        `Derisiz Bonfile Maliyeti: ${maliyet} TL/kg`;
+    }
+
+    function miktarHesapla() {
+      const miktar = parseFloat(document.getElementById('miktar').value.replace(",", "."));
+
+      if (isNaN(miktar)) {
+        document.getElementById('sonuc2').innerText = "Lütfen geçerli bir miktar girin.";
+        return;
+      }
+
+      const bonfileKg = (miktar * 0.9).toFixed(2);
+      const deriKg = (miktar * 0.1).toFixed(2);
+
+      document.getElementById('sonuc2').innerText =
+        `Derisiz Bonfile: ${bonfileKg} kg\nDeri: ${deriKg} kg`;
+    }
+  </script>
+
+</body>
+</html>
