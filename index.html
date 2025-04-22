@@ -4,94 +4,270 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Bonfile Hesaplamalar</title>
+
   <style>
-    body {
-      font-family: 'Segoe UI', sans-serif;
-      background: #f1f4f8;
-      display: flex;
-      justify-content: center;
-      align-items: flex-start;
-      padding: 40px 20px;
-      gap: 30px;
-      flex-wrap: wrap;
-    }
-    .card {
-      background: #fff;
-      padding: 30px;
-      border-radius: 16px;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-      width: 320px;
-    }
-    .card h2 {
-      text-align: center;
-      margin-bottom: 20px;
-      color: #333;
-    }
-    label {
-      display: block;
-      margin-bottom: 8px;
-      color: #555;
-    }
-    input {
-      width: 100%;
-      padding: 10px;
-      border-radius: 8px;
-      border: 1px solid #ccc;
-      font-size: 16px;
-      appearance: none;
-      -moz-appearance: textfield;
-    }
-    input::-webkit-inner-spin-button,
-    input::-webkit-outer-spin-button {
-      -webkit-appearance: none;
-      margin: 0;
-    }
-    button {
-      width: 100%;
-      padding: 12px;
-      margin-top: 15px;
-      background-color: #007BFF;
-      color: white;
-      font-size: 16px;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-    }
-    button:hover {
-      background-color: #0056b3;
-    }
-    .result {
-      margin-top: 20px;
-      text-align: center;
-      font-weight: bold;
-      font-size: 18px;
-      color: #222;
-    }
-  </style>
+  .info-icon {
+  position: absolute;
+  top: 8px;
+  left: 10px;
+  font-size: 16px;
+  cursor: pointer;
+  background: #e0e7ff;
+  color: #333;
+  padding: 4px 8px;
+  border-radius: 12px;
+  z-index: 2;
+}
+
+.aciklama-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255,255,255,0.95);
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  z-index: 10;
+  border-radius: 12px;
+  box-sizing: border-box;
+}
+
+.aciklama-icerik {
+  text-align: center;
+  font-size: 14px;
+  color: #222;
+}
+
+.aciklama-icerik button {
+  margin-top: 15px;
+  padding: 6px 12px;
+  font-size: 13px;
+  background: #007BFF;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+  body {
+    font-family: 'Segoe UI', sans-serif;
+    background: #f1f4f8;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 30px 10px;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+
+  .card {
+   position: relative;
+    background: #fff;
+    padding: 18px;
+    border-radius: 12px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+    width: 240px;
+    height: 500px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-sizing: border-box;
+    overflow: hidden;
+  }
+
+  .card h2 {
+    font-size: 16px;
+    text-align: center;
+    margin: 8px 0;
+    color: #333;
+  }
+
+  label {
+    font-size: 13px;
+    margin-bottom: 4px;
+    color: #555;
+  }
+
+  input {
+    width: 100%;
+    padding: 6px 8px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+    appearance: none;
+    -moz-appearance: textfield;
+  }
+
+  input::-webkit-inner-spin-button,
+  input::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  button {
+    width: 100%;
+    padding: 8px;
+    margin-top: 10px;
+    background-color: #007BFF;
+    color: white;
+    font-size: 14px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+
+  button:hover {
+    background-color: #0056b3;
+  }
+
+  .result {
+    min-height: 60px;
+    margin-top: 10px;
+    text-align: center;
+    font-weight: bold;
+    font-size: 14px;
+    color: #222;
+    white-space: pre-line;
+  }
+</style>
+
 </head>
 <body>
 
-  <!-- Card 1: Bonfile Maliyeti -->
-  <div class="card">
-    <h2><STRONG>MADDE:</STRONG>DERİLİ BONFİLE</h2>
-    <hr>
-     <h2>Derisiz Bonfile maliyeti bulma & Deri imha etme </h2>
-    <label for="fiyat">Derili Bonfile Fiyatı (TL/kg):</label>
-    <input type="text" id="fiyat"  />
-    <button onclick="maliyetHesapla()">Hesapla</button>
-    <div class="result" id="sonuc1"></div>
-  </div>
 
-  <!-- Card 2: Miktar Dağılımı -->
-  <div class="card">
+
+<div class="card">
+  <div class="info-icon" onclick="aciklamaGoster(this)">ℹ️</div>
+  <div class="aciklama-overlay">
+    <div class="aciklama-icerik">
+      <p>Bu kart, derili bonfile fiyatından yola çıkarak derisiz bonfile maliyetini hesaplar. Deri fire oranı %10 alınmıştır. Ayrıca Deri imha edilmesi gereken durumda çalışır, ona göre maliyet hesaplayacaktır.</p>
+      <button onclick="aciklamaKapat(this)">Kapat</button>
+    </div>
+  </div>
+  
+  
+  <h2><strong>ÇALIŞ:</strong>1</h2>
+  <h2>Derili Bonfile</h2>
+  <hr />
+  <h2>Derisiz Bonfile maliyeti bulma & Deri imha etme</h2>
+  <label for="fiyat">Derili Bonfile Fiyatı (TL/kg):</label>
+  <input type="text" id="fiyat" />
+  <button onclick="maliyetHesapla()">Hesapla</button>
+  <div class="result" id="sonuc1"></div>
+  
+  
+</div>
+
+
+<div class="card">
+  <div class="info-icon" onclick="aciklamaGoster(this)">ℹ️</div>
+  <div class="aciklama-overlay">
+    <div class="aciklama-icerik">
+     <p>Bu kart, verilen derili bonfile miktarına göre, derisiz bonfile ve deri miktarını hesaplar. Deri fire oranı %10 olarak kabul edilmiştir. Girilen derili bonfile miktarına göre, derisiz bonfile ve deri miktarları otomatik olarak hesaplanacaktır.</p>
+
+      <button onclick="aciklamaKapat(this)">Kapat</button>
+    </div>
+  </div>
+  
+  
+    <!-- Card 2: Miktar Dağılımı -->
+  
+  <h2><STRONG>ÇALIŞ:</STRONG>2</h2>
+  <h2>Derili Bonfile</h2>
     <h2>Derili bonfileden Derisiz Bonfile & Deri Miktarı Bulma</h2>
     <label for="miktar">Derili Bonfile Miktarı (kg):</label>
     <input type="text" id="miktar"  />
     <button onclick="miktarHesapla()">Hesapla</button>
     <div class="result" id="sonuc2"></div>
+ 
+  
+  
+</div>
+
+
+<div class="card">
+  <div class="info-icon" onclick="aciklamaGoster(this)">ℹ️</div>
+  <div class="aciklama-overlay">
+    <div class="aciklama-icerik">
+     <p>Bu kart, verilen tane gramajı, koli adedi ve toplam kilogram üzerinden, toplam adet sayısını hesaplar. Ayrıca, bir adet için belirlenen kilogram fiyatı üzerinden, KDV hariç ve KDV dahil adet fiyatlarını hesaplar. Bu bilgilerle toplam maliyet hesaplamaları yapılabilir.</p>
+
+      <button onclick="aciklamaKapat(this)">Kapat</button>
+    </div>
   </div>
+  
+  
+<!-- Card 3: Adet Hesaplama -->
+
+<h2><STRONG>ÇALIŞ:</STRONG>3</h2>
+<h2>Adet Hesaplama</h2>
+
+  <label for="taneGram">Tane Gramajı (gr):</label>
+  <input type="number" id="taneGram" placeholder="örn:500"/>
+
+ <label for="koliAdedi">Bir Kolideki Adet Sayısı:</label>
+  <input type="number" id="koliAdedi" placeholder="örn:8" />
+
+  <label for="toplamKg">Toplam Miktar (kg):</label>
+  <input type="number" id="toplamKg" />
+
+  <label for="birimFiyat">1 kg Fiyat (KDV Hariç):</label>
+  <input type="number" id="birimFiyat" step="0.0001"/>
+
+  <label for="kdvOrani">KDV Oranı (%):</label>
+  <input type="number" id="kdvOrani" value="1" />
+
+  <button onclick="sosisDogruHesapla()">Hesapla</button>
+  <div class="result" id="sonuc3"></div>
+
+  
+  
+</div>
+
+  
+
+
 
   <script>
+  function aciklamaGoster(elem) {
+  const card = elem.closest('.card');
+  const overlay = card.querySelector('.aciklama-overlay');
+  overlay.style.display = 'flex';
+}
+
+function aciklamaKapat(btn) {
+  const overlay = btn.closest('.aciklama-overlay');
+  overlay.style.display = 'none';
+}
+
+  
+  
+  
+ function sosisDogruHesapla() {
+  const gram = parseFloat(document.getElementById('taneGram').value);
+  const koliAdet = parseInt(document.getElementById('koliAdedi').value);
+  const toplamKg = parseFloat(document.getElementById('toplamKg').value);
+  const birimFiyatKg = parseFloat(document.getElementById('birimFiyat').value);
+  const kdv = parseFloat(document.getElementById('kdvOrani').value);
+
+  if (isNaN(gram) || isNaN(koliAdet) || isNaN(toplamKg) || isNaN(birimFiyatKg) || isNaN(kdv)) {
+    document.getElementById('sonuc3').innerText = "Lütfen tüm alanları doldurun.";
+    return;
+  }
+
+  const koliKg = (gram * koliAdet) / 1000; // bir kolideki kg miktarı
+  const toplamAdet = Math.round(toplamKg / (gram / 1000)); // toplam adet sosis
+  const adetFiyatKDVsiz = (birimFiyatKg * (gram / 1000)).toFixed(2);
+  const adetFiyatKDVli = (adetFiyatKDVsiz * (1 + kdv / 100)).toFixed(2);
+
+  document.getElementById('sonuc3').innerText =
+    `Gelen Adet: ${toplamAdet} adet\n` +
+    `KDV Hariç: ${adetFiyatKDVsiz} TL\n` +
+    `KDV Dahil: ${adetFiyatKDVli} TL`;
+}
+
     function maliyetHesapla() {
       const fiyat = parseFloat(document.getElementById('fiyat').value.replace(",", "."));
 
