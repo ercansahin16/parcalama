@@ -155,6 +155,8 @@
   <h2>Derisiz Bonfile maliyeti bulma & Deri imha etme</h2>
   <input type="text" id="fiyat" placeholder="Gelen Derili Bonfile Fiyatı Giriniz" />
   <button onclick="maliyetHesapla()">Hesapla</button>
+  <button class="temizle" onclick="inputlariTemizle(this)">Temizle</button>
+
   <div class="result" id="sonuc1"></div>
   
   
@@ -179,6 +181,7 @@
     <h2>Derili bonfileden Derisiz Bonfile & Deri Miktarı Bulma</h2>
     <input type="text" id="miktar"  placeholder="Gelen Derili Bonfile Kg Giriniz"/>
     <button onclick="miktarHesapla()">Hesapla</button>
+  <button class="temizle" onclick="inputlariTemizle(this)">Temizle</button>
     <div class="result" id="sonuc2"></div>
  
   
@@ -218,6 +221,7 @@
   <input type="number" id="kdvOrani" value="1"  />
 
   <button onclick="sosisDogruHesapla()">Hesapla</button>
+  <button class="temizle" onclick="inputlariTemizle(this)">Temizle</button>
   <div class="result" id="sonuc3"></div>
 
   
@@ -229,6 +233,26 @@
 
 
   <script>
+
+
+  function inputlariTemizle(btn) {
+  const card = btn.closest('.card');
+  const inputs = card.querySelectorAll('input');
+  const result = card.querySelector('.result');
+
+  inputs.forEach(input => {
+    input.value = '';
+  });
+
+  if (result) {
+    result.innerText = '';
+  }
+}
+
+
+
+
+    
   function aciklamaGoster(elem) {
   const card = elem.closest('.card');
   const overlay = card.querySelector('.aciklama-overlay');
