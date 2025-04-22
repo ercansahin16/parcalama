@@ -205,17 +205,17 @@
 
   <input type="number" id="taneGram" placeholder="Tane Gramajı (gr): örn:500"/>
 
- <label for="koliAdedi">Bir Kolideki Adet Sayısı:</label>
-  <input type="number" id="koliAdedi" placeholder="örn:8" />
 
-  <label for="toplamKg">Toplam Miktar (kg):</label>
-  <input type="number" id="toplamKg" />
+  <input type="number" id="koliAdedi" placeholder="Kolideki Adet Sayısı: örn:8" />
 
-  <label for="birimFiyat">1 kg Fiyat (KDV Hariç):</label>
-  <input type="number" id="birimFiyat" step="0.0001"/>
+ 
+  <input type="number" id="toplamKg" placeholder="Toplam Miktar (kg): örn: 400" />
 
-  <label for="kdvOrani">KDV Oranı (%):</label>
-  <input type="number" id="kdvOrani" value="1" />
+
+  <input type="number" id="birimFiyat" step="0.0001" placeholder="1 kg Fiyat (KDV Hariç): örn: 74.25" />
+
+ 
+  <input type="number" id="kdvOrani" value="1"  />
 
   <button onclick="sosisDogruHesapla()">Hesapla</button>
   <div class="result" id="sonuc3"></div>
